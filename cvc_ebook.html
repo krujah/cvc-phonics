@@ -75,17 +75,9 @@ body {
   overflow: hidden;
 }
 .book-emoji { font-size: 100px; line-height: 1; }
-.book-img-uploaded {
-  width: 100%; height: 100%; object-fit: cover;
-  position: absolute; top: 0; left: 0;
-}
-.upload-hint {
-  position: absolute; bottom: 8px; right: 10px;
-  background: rgba(0,0,0,0.45); color: #fff;
-  font-size: 11px; font-weight: 700; padding: 3px 8px;
-  border-radius: 8px; cursor: pointer;
-}
-.upload-input { display: none; }
+
+
+
 
 /* Text Area */
 .book-text-area { padding: 1rem 1.25rem; }
@@ -220,6 +212,11 @@ body {
 
 .mini-banner { width:100%; border-radius:16px; overflow:hidden; margin-bottom:1rem; box-shadow:0 4px 16px rgba(0,0,0,.15); }
 .mini-banner img { width:100%; height:auto; display:block; }
+
+.book-img-uploaded {
+  width: 100%; height: 100%; object-fit: cover;
+  position: absolute; top: 0; left: 0;
+}
 </style>
 </head>
 <body>
@@ -249,9 +246,7 @@ body {
       </div>
       <div class="book-image" id="book-image">
         <span class="book-emoji" id="book-emoji"></span>
-        <img class="book-img-uploaded" id="book-img" style="display:none" />
-        <label class="upload-hint" for="img-upload">📷 ใส่ภาพ</label>
-        <input class="upload-input" type="file" id="img-upload" accept="image/*">
+        <img class="book-img-uploaded" id="book-img" style="display:none" alt="story image" />
       </div>
       <div class="book-text-area">
         <div class="book-sentence" id="book-sentence"></div>
@@ -483,7 +478,7 @@ const stories = [
 
 let currentStory = null;
 let currentPage = 0;
-const imgMap = {};
+
 
 // TTS
 function tts(text, rate=0.75) {
@@ -556,7 +551,7 @@ function renderPage() {
                        story.id === 8 ? STORY8_IMGS :
                        story.id === 9 ? STORY9_IMGS :
                        story.id === 10 ? STORY10_IMGS : {};
-  const imgSrc = imgMap[key] || embeddedImgs[currentPage] || null;
+  const imgSrc = embeddedImgs[currentPage] || null;
   if (imgSrc) {
     imgEl.src = imgSrc; imgEl.style.display = 'block';
     emojiEl.style.display = 'none';
@@ -640,17 +635,7 @@ document.getElementById('btn-back').onclick = () => {
   document.getElementById('book-wrap').classList.remove('show');
 };
 
-// Image upload
-document.getElementById('img-upload').onchange = function(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const key = `${currentStory.id}-${currentPage}`;
-    imgMap[key] = ev.target.result;
-    renderPage();
-  };
-  reader.readAsDataURL(file);
-};
+
 
 if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = () => {};
 renderList();
