@@ -14,19 +14,19 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#FFE566,#
 .header{text-align:center;background:linear-gradient(135deg,#FF4757,#C0000A);border-radius:24px;padding:1rem;margin-bottom:1rem;box-shadow:0 6px 0 #8B0000;}
 .header h1{font-size:22px;font-weight:900;color:#fff;}
 .header p{font-size:12px;color:rgba(255,255,255,.9);font-weight:700;margin-top:3px;}
-.video-card{background:#fff;border-radius:20px;border:3px solid #2E86FF;box-shadow:0 5px 0 #0C447C;padding:.75rem;margin-bottom:1rem;}
-.video-title{font-size:15px;font-weight:800;color:#185FA5;margin-bottom:1rem;text-align:center;}
-.video-wrap{position:relative;width:100%;padding-top:56.25%;border-radius:10px;overflow:hidden;background:#000;box-shadow:0 4px 12px rgba(0,0,0,.2);}
-.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
-.vowel-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:1rem;}
-.vtab{padding:8px 4px;border-radius:14px;border:2.5px solid rgba(255,255,255,.3);cursor:pointer;font-weight:800;background:rgba(255,255,255,.6);text-align:center;transition:all .18s;box-shadow:0 3px 0 rgba(0,0,0,.12);}
-.vtab .big{display:block;font-size:18px;}
-.vtab .ipa{display:block;font-size:11px;opacity:.7;}
-.vtab[data-v="a"].active{background:#FF4757;color:#fff;border-color:#FF4757;box-shadow:0 4px 0 #8B0000;}
-.vtab[data-v="e"].active{background:#2E86FF;color:#fff;border-color:#2E86FF;box-shadow:0 4px 0 #0C447C;}
-.vtab[data-v="i"].active{background:#20BF55;color:#fff;border-color:#20BF55;box-shadow:0 4px 0 #0F6E56;}
-.vtab[data-v="o"].active{background:#FF8C00;color:#fff;border-color:#FF8C00;box-shadow:0 4px 0 #CC6F00;}
-.vtab[data-v="u"].active{background:#9B59B6;color:#fff;border-color:#9B59B6;box-shadow:0 4px 0 #7D3C98;}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .tips{background:rgba(255,255,255,.6);border-radius:16px;padding:1rem;margin-bottom:1rem;border:2px solid rgba(255,255,255,.8);}
 .tips-title{font-size:13px;font-weight:800;color:#7A5500;margin-bottom:8px;}
 .tip-item{font-size:12px;color:#555;font-weight:600;margin-bottom:5px;display:flex;gap:6px;}
@@ -54,8 +54,8 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#FFE566,#
   .mini-banner { border-radius: 10px; margin-bottom: .75rem; }
   .header { border-radius: 16px; padding: .75rem; margin-bottom: .75rem; }
   .header h1 { font-size: 18px; }
-  .vowel-tabs { gap: 4px; margin-bottom: .75rem; }
-  .vtab .big { font-size: 16px; }
+  
+  
   .tips { padding: .75rem; margin-bottom: .75rem; }
   .home-btn { padding: 10px; font-size: 13px; }
 }
@@ -72,14 +72,70 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#FFE566,#
   .header { border-radius:16px; padding:.65rem; margin-bottom:.65rem; }
   .header h1 { font-size:17px; }
   .header p { font-size:11px; }
-  .vowel-tabs { gap:3px; margin-bottom:.65rem; }
-  .vtab { padding:6px 2px; border-radius:10px; }
-  .vtab .big { font-size:15px; }
-  .vtab .ipa { font-size:10px; }
+  
+  
+  
+  
   .tips { padding:.65rem; margin-bottom:.65rem; }
   .tip-item { font-size:11px; }
   .home-btn { padding:10px; font-size:12px; }
   .video-title { font-size:13px; margin-bottom:.65rem; }
+}
+
+.video-card { background:#fff; border-radius:20px; border:3px solid #2E86FF; box-shadow:0 5px 0 #0C447C; padding:.5rem; margin-bottom:1rem; }
+.video-title { font-size:15px; font-weight:800; color:#185FA5; margin-bottom:.75rem; text-align:center; }
+
+/* Thumbnail + play button */
+.thumb-container { 
+  position:relative; width:100%; border-radius:10px; 
+  overflow:hidden; cursor:pointer; background:#000;
+  aspect-ratio:16/9;
+}
+.thumb-container img { 
+  width:100%; height:100%; 
+  object-fit:cover; display:block; 
+  opacity:0.9; transition:opacity .2s;
+}
+
+.thumb-container:hover img { opacity:0.75; }
+.play-btn { 
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:72px; height:72px; border-radius:50%;
+  background:rgba(46,134,255,0.92);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+  transition:transform .2s;
+}
+.thumb-container:hover .play-btn { transform:translate(-50%,-50%) scale(1.1); }
+.play-icon { font-size:30px; color:#fff; margin-left:5px; }
+
+/* Modal video */
+.video-modal {
+  display:none; position:fixed; inset:0; z-index:9999;
+  background:rgba(0,0,0,0.95);
+  flex-direction:column; align-items:center; justify-content:center;
+}
+.video-modal.open { display:flex; }
+.modal-close {
+  position:absolute; top:16px; right:16px;
+  width:40px; height:40px; border-radius:50%;
+  background:rgba(255,255,255,.2); border:none;
+  color:#fff; font-size:22px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.modal-iframe-wrap {
+  width:98vw; max-width:1000px;
+  position:relative; padding-top:56.25%;
+}
+.modal-iframe-wrap iframe {
+  position:absolute; inset:0; width:100%; height:100%; border:none; border-radius:8px;
+}
+.open-yt-btn {
+  margin-top:16px;
+  background:rgba(255,255,255,.15); border:2px solid rgba(255,255,255,.4);
+  color:#fff; padding:10px 24px; border-radius:50px;
+  font-size:14px; font-weight:800; cursor:pointer;
+  font-family:'Nunito',sans-serif;
 }
 </style>
 </head>
@@ -92,13 +148,25 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#FFE566,#
     <p>เรียนรู้การออกเสียงตามสระ a e i o u</p>
   </div>
 
-  <div class="vowel-tabs" id="vtabs"></div>
+  
 
   <div class="video-card">
     <div class="video-title">🎵 Phonics Song — CVC Words</div>
-    <div class="video-wrap">
-      <iframe width="100%" height="100%" src="https://drive.google.com/file/d/1de_gO6x8BRSKWmZPzKqInvyPtIZ5y7Fo/preview" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+    <div class="thumb-container" onclick="openVideo()">
+      <img src="https://drive.google.com/thumbnail?id=1de_gO6x8BRSKWmZPzKqInvyPtIZ5y7Fo&sz=w800" 
+           onerror="this.src='https://lh3.googleusercontent.com/drive-viewer/thumbnail'"
+           alt="Phonics Song thumbnail">
+      <div class="play-btn"><span class="play-icon">▶</span></div>
     </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="video-modal" id="videoModal">
+    <button class="modal-close" onclick="closeVideo()">✕</button>
+    <div class="modal-iframe-wrap">
+      <iframe id="driveFrame" src="" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+    </div>
+    <button class="open-yt-btn" onclick="window.open('https://drive.google.com/file/d/1de_gO6x8BRSKWmZPzKqInvyPtIZ5y7Fo/preview','_blank')">🔗 เปิดในหน้าต่างใหม่</button>
   </div>
 
   <div class="tips">
@@ -117,20 +185,19 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#FFE566,#
 
 <script>
 const VIDEO_ID = 'nHNC1cD7ahk';
-const vowels = ['a','e','i','o','u'];
-const ipaDisplay = {a:'/æ/',e:'/e/',i:'/ɪ/',o:'/ɒ/',u:'/ʌ/'};
-let currentVowel = 'a';
 
-function renderTabs(){
-  const c = document.getElementById('vtabs'); c.innerHTML='';
-  vowels.forEach(v=>{
-    const b = document.createElement('button');
-    b.className = 'vtab'+(v===currentVowel?' active':'');
-    b.setAttribute('data-v',v);
-    b.innerHTML = `<span class="big">${v.toUpperCase()}</span><span class="ipa">${ipaDisplay[v]}</span>`;
-    b.onclick = ()=>{ currentVowel=v; renderTabs(); };
-    c.appendChild(b);
-  });
+
+
+
+function openVideo(){
+  document.getElementById('driveFrame').src = 'https://drive.google.com/file/d/1de_gO6x8BRSKWmZPzKqInvyPtIZ5y7Fo/preview';
+  document.getElementById('videoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeVideo(){
+  document.getElementById('driveFrame').src = '';
+  document.getElementById('videoModal').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function goHome(){
@@ -138,7 +205,7 @@ function goHome(){
   window.location.href = base+'cvc_homepage.html';
 }
 
-renderTabs();
+
 </script>
 </body>
 </html>
